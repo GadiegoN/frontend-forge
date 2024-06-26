@@ -3,8 +3,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Contact, Flag, Mail, Monitor, Smartphone } from "lucide-react";
+import { useState } from "react";
 
 export function Home() {
+    const [showMore, setShowMore] = useState(false)
     return (
         <div className="w-full max-w-7xl mx-auto gap-16">
             <div className="w-full flex flex-col md:flex-row justify-center items-center shadow-lg bg-secondary rounded-lg relative">
@@ -12,7 +14,7 @@ export function Home() {
                     <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold mt-4 select-none">Eu sou Gadiego Nogueira</h1>
                     <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold">Desenvolvedor <span className="text-primary">Front-End</span></h2>
 
-                    <p className="my-4 line-clamp-4">
+                    <p className={!showMore ? "my-4 line-clamp-4 md:line-clamp-2" : "my-4"}>
                         Desenvolvedor Frontend, formado em Sistemas de Informação.
                         Com mais de 4 anos de experiência em desenvolvimento web e mobile,
                         especializado em ReactJS, React Native, Angular, NodeJs e TypeScript.
@@ -20,7 +22,7 @@ export function Home() {
                         técnicas e de gestão.
                     </p>
 
-                    <Button size="sm" variant="outline" className="w-64 mt-10">Saber mais...</Button>
+                    <Button onClick={() => setShowMore(!showMore)} size="sm" variant="outline" className="w-64 mt-10">Saber mais...</Button>
                 </div>
                 <div className="md:flex hidden relative w-full max-w-96 h-96 min-h-64 bg-primary rounded-tl-[290px] rounded-tr-lg rounded-br-lg px-10">
                     <img src="/avatar.png" className="absolute bottom-0 left-0 right-0 h-96 object-cover" alt="" />
@@ -75,7 +77,7 @@ export function Home() {
                             </p>
                         </div>
                     </div>
-                    <div className="w-full bg-card shadow-2xl rounded-lg p-4 mx-auto flex justify-between items-center">
+                    <div className="w-full bg-card shadow-2xl rounded-lg p-4 mx-auto flex justify-between items-center flex-col md:flex-row">
                         <div className="w-full md:w-6/12">
                             <h3 className="text-lg font-semibold">MBA USP/Esalq</h3>
                             <p className="text-foreground font-medium">Cursando <span className="font-normal bg-primary px-4 py-1 rounded-full text-white text-sm ml-6">Mai 2024 - Momento</span></p>
@@ -101,12 +103,12 @@ export function Home() {
                 </div>
 
                 <div className="w-full flex flex-col p-4 items-center gap-4">
-                    <div className="w-full bg-card shadow-2xl rounded-lg p-4 mx-auto flex justify-between items-center">
-                        <div className="w-6/12">
+                    <div className="w-full bg-card shadow-2xl rounded-lg p-4 mx-auto flex justify-between items-center flex-col md:flex-row">
+                        <div className="w-full md:w-6/12">
                             <h3 className="text-lg font-semibold">Dyndo</h3>
                             <p className="text-foreground font-medium">Tempo Integral <span className="font-normal bg-primary px-4 py-1 rounded-full text-white text-sm ml-6">Jan 2023 - Mai 2024</span></p>
                         </div>
-                        <div className="w-6/12">
+                        <div className="w-full md:w-6/12">
                             <h3 className="text-lg font-semibold">Desenvolvedor Web/Mobile</h3>
                             <p className="text-foreground my-4 text-justify">
                                 Trabalhei no desenvolvimento de aplicações utilizando ReactJs e React Native, Typescript, TailwindCSS, Styled Components.
@@ -115,12 +117,12 @@ export function Home() {
                             </p>
                         </div>
                     </div>
-                    <div className="w-full bg-card shadow-2xl rounded-lg p-4 mx-auto flex justify-between items-center">
-                        <div className="w-6/12">
+                    <div className="w-full bg-card shadow-2xl rounded-lg p-4 mx-auto flex justify-between items-center flex-col md:flex-row">
+                        <div className="w-full md:w-6/12">
                             <h3 className="text-lg font-semibold">Dyndo</h3>
                             <p className="text-foreground font-medium">Tempo Integral <span className="font-normal bg-primary px-4 py-1 rounded-full text-white text-sm ml-6">Jan 2022 - Jul 2022</span></p>
                         </div>
-                        <div className="w-6/12">
+                        <div className="w-full md:w-6/12">
                             <h3 className="text-lg font-semibold">Desenvolvedor Mobile</h3>
                             <p className="text-foreground my-4 text-justify">
                                 Fui responsável pela reconstrução de um aplicativo existente que utilizava o framework Quasar, migrando-o para React Native.
@@ -128,12 +130,12 @@ export function Home() {
                             </p>
                         </div>
                     </div>
-                    <div className="w-full bg-card shadow-2xl rounded-lg p-4 mx-auto flex justify-between items-center">
-                        <div className="w-6/12">
+                    <div className="w-full bg-card shadow-2xl rounded-lg p-4 mx-auto flex justify-between items-center flex-col md:flex-row">
+                        <div className="w-full md:w-6/12">
                             <h3 className="text-lg font-semibold">Bravo - Serviços Logísticos</h3>
                             <p className="text-foreground font-medium">Tempo Integral <span className="font-normal bg-primary px-4 py-1 rounded-full text-white text-sm ml-6">Out 2020 - Dez 2021</span></p>
                         </div>
-                        <div className="w-6/12">
+                        <div className="w-full md:w-6/12">
                             <h3 className="text-lg font-semibold">Analista de Sistemas</h3>
                             <p className="text-foreground my-4 text-justify">
                                 Atuei na manutenção e atualização contínua do código frontend para garantir compatibilidade com as últimas versões do Angular e melhorias na performance.
@@ -142,12 +144,12 @@ export function Home() {
                             </p>
                         </div>
                     </div>
-                    <div className="w-full bg-card shadow-2xl rounded-lg p-4 mx-auto flex justify-between items-center">
-                        <div className="w-6/12">
+                    <div className="w-full bg-card shadow-2xl rounded-lg p-4 mx-auto flex justify-between items-center flex-col md:flex-row">
+                        <div className="w-full md:w-6/12">
                             <h3 className="text-lg font-semibold">Dyndo</h3>
                             <p className="text-foreground font-medium">Tempo Integral <span className="font-normal bg-primary px-4 py-1 rounded-full text-white text-sm ml-6">Jun 2019 - Out 2020</span></p>
                         </div>
-                        <div className="w-6/12">
+                        <div className="w-full md:w-6/12">
                             <h3 className="text-lg font-semibold">Desenvolvedor Mobile</h3>
                             <p className="text-foreground my-4 text-justify">
                                 Essa experiência foi fundamental para desenvolver minhas habilidades em Vue.js e no uso do framework Quasar.
