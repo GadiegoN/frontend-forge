@@ -20,9 +20,9 @@ export function Header() {
             <Logo />
             <div className="flex gap-4">
                 <div className="hidden md:flex">
-                    <Button variant="link"><a href="#">Ínicio</a></Button>
-                    <Button variant="link" onClick={() => navigate('/sign-in')}>Painel ADM</Button>
-                    <Button variant="link"><a href="#contact">Contato</a></Button>
+                    <Button variant="link" onClick={() => navigate('/')}>Ínicio</Button>
+                    <Button variant="link" onClick={() => navigate('/dashboard')}>Painel ADM</Button>
+                    <Button variant="link" asChild><a href="#contact">Contato</a></Button>
                 </div>
                 <DropdownMenu>
                     <DropdownMenuTrigger className="flex md:hidden lg:hidden" asChild>
@@ -31,10 +31,10 @@ export function Header() {
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                        <DropdownMenuItem asChild>
-                            <a className="cursor-pointer" href="#">Ínicio</a>
+                        <DropdownMenuItem onClick={() => navigate('/')}>
+                            Ínicio
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate('/sign-in')}>
+                        <DropdownMenuItem onClick={() => navigate('/dashboard')}>
                             Painel ADM
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild>
