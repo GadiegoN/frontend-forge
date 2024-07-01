@@ -1,4 +1,4 @@
-import { Moon, Sun } from "lucide-react"
+import { AlignJustify, Moon, Sun } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
@@ -16,12 +16,30 @@ export function Header() {
     return (
         <div className="w-full h-20 flex justify-around shadow-2xl border-b mb-2 items-center bg-primary/10">
             <Logo />
-            <div className="flex">
-                <div>
+            <div className="flex gap-4">
+                <div className="hidden md:flex">
                     <Button variant="link"><a href="#">Ínicio</a></Button>
                     <Button variant="link" disabled>Painel ADM</Button>
                     <Button variant="link"><a href="#contact">Contato</a></Button>
                 </div>
+                <DropdownMenu>
+                    <DropdownMenuTrigger className="flex md:hidden lg:hidden" asChild>
+                        <Button variant="outline" size="icon">
+                            <AlignJustify className="h-[1.2rem] w-[1.2rem]" />
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                        <DropdownMenuItem asChild>
+                            <a className="cursor-pointer" href="#">Ínicio</a>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                            <a className="cursor-pointer" href="">Painel ADM</a>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                            <a className="cursor-pointer" href="#contact">Contato</a>
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline" size="icon">

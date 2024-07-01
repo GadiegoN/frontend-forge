@@ -22,7 +22,7 @@ export function Home() {
                         técnicas e de gestão.
                     </p>
 
-                    <Button onClick={() => setShowMore(!showMore)} size="sm" variant="outline" className="w-64 mt-10">Saber mais...</Button>
+                    <Button onClick={() => setShowMore(!showMore)} size="sm" variant="outline" className="w-64 mt-10">{!showMore ? "Ler mais..." : "Ler menos"}</Button>
                 </div>
                 <div className="md:flex hidden relative w-full max-w-96 h-96 min-h-64 bg-primary rounded-tl-[290px] rounded-tr-lg rounded-br-lg px-10">
                     <img src="/avatar.png" className="absolute bottom-0 left-0 right-0 h-96 object-cover" alt="" />
