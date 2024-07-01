@@ -8,10 +8,12 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { useTheme } from "@/components/theme-provider"
 import { Logo } from "@/assets/logo"
+import { useNavigate } from "react-router-dom"
 
 
 export function Header() {
     const { setTheme } = useTheme()
+    const navigate = useNavigate()
 
     return (
         <div className="w-full h-20 flex justify-around shadow-2xl border-b mb-2 items-center bg-primary/10">
@@ -19,7 +21,7 @@ export function Header() {
             <div className="flex gap-4">
                 <div className="hidden md:flex">
                     <Button variant="link"><a href="#">Ínicio</a></Button>
-                    <Button variant="link" disabled>Painel ADM</Button>
+                    <Button variant="link" onClick={() => navigate('/sign-in')}>Painel ADM</Button>
                     <Button variant="link"><a href="#contact">Contato</a></Button>
                 </div>
                 <DropdownMenu>
@@ -32,8 +34,8 @@ export function Header() {
                         <DropdownMenuItem asChild>
                             <a className="cursor-pointer" href="#">Ínicio</a>
                         </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
-                            <a className="cursor-pointer" href="">Painel ADM</a>
+                        <DropdownMenuItem onClick={() => navigate('/sign-in')}>
+                            Painel ADM
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild>
                             <a className="cursor-pointer" href="#contact">Contato</a>

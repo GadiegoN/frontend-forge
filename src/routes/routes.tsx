@@ -10,6 +10,7 @@ import { AuthLayout } from "@/pages/_layout/auth";
 import { SignIn } from "@/pages/auth/sign-in";
 
 import { NotFound } from "@/pages/error/not-found";
+import { PrivateRoute } from "@/pages/private/private-routes";
 
 export const router = createBrowserRouter([
     {
@@ -30,7 +31,7 @@ export const router = createBrowserRouter([
     },
     {
         path: "/",
-        element: <AdminLayout />,
+        element: <PrivateRoute><AdminLayout /></PrivateRoute>,
         errorElement: <NotFound />,
         children: [
             { path: "/dashboard", element: <Dashboard /> }
