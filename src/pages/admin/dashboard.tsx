@@ -12,6 +12,7 @@ import { useEffect, useState } from "react"
 import { Profile } from "./profile"
 import { Contact } from "./contact"
 import { collection, getDocs, query } from "firebase/firestore"
+import { Recommendation } from "./recommendation"
 interface PagesProps {
     id: string,
     name: string,
@@ -78,6 +79,10 @@ export function Dashboard() {
 
             {selectedPage === "contact" && (
                 <Contact />
+            )}
+
+            {selectedPage === "recommendation" && (
+                <Recommendation />
             )}
         </div>
     )
