@@ -52,13 +52,19 @@ export function Header() {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                         <DropdownMenuItem onClick={() => setTheme("light")}>
-                            Claro
+                            Laranja Light
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => setTheme("dark")}>
-                            Escuro
+                            Laranja Dark
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => setTheme("system")}>
                             Padrão
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => setTheme("green")}>
+                            verde Light
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => setTheme("green-dark")}>
+                            verde Dark
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
