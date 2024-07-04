@@ -2,11 +2,88 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Contact, Flag, Mail, Monitor, Smartphone } from "lucide-react";
-import { useState } from "react";
+import { db } from "@/services/firebase-connection";
+import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
+import { Contact, Flag, Mail, Monitor, Smartphone, Star, User } from "lucide-react";
+import { useEffect, useState } from "react";
+import {
+    HoverCard,
+    HoverCardContent,
+    HoverCardTrigger,
+} from "@/components/ui/hover-card"
+
+interface ReviewsProps {
+    id: string;
+    uid: string;
+    name: string;
+    email: string;
+    rating: number;
+    comment: string;
+    created: Date;
+    profile: ProfileProps | null;
+}
+
+interface AvatarProps {
+    name: string;
+    uid: string;
+    previewUrl: string;
+    url: string;
+}
+
+interface ProfileProps {
+    id: string;
+    uid: string;
+    avatar: AvatarProps[];
+    name: string;
+    about: string;
+}
 
 export function Home() {
+    const [reviews, setReviews] = useState<ReviewsProps[]>([])
     const [showMore, setShowMore] = useState(false)
+
+    useEffect(() => {
+        async function loadReviews() {
+            const reviewsRef = collection(db, "reviews");
+            const queryRef = query(reviewsRef, orderBy("created", "asc"));
+
+            const reviewSnapshots = await getDocs(queryRef);
+            const listReviews: ReviewsProps[] = [];
+
+            for (const doc of reviewSnapshots.docs) {
+                const reviewData = doc.data();
+
+                const profileRef = collection(db, "profile");
+                const profileQueryRef = query(profileRef, where("uid", "==", reviewData.uid));
+                const profileSnapshots = await getDocs(profileQueryRef);
+
+                const profileData = profileSnapshots.docs.map(profileDoc => ({
+                    id: profileDoc.id,
+                    uid: profileDoc.data().uid,
+                    avatar: profileDoc.data().avatar,
+                    name: profileDoc.data().name,
+                    about: profileDoc.data().about,
+                }))[0] || null;
+
+                listReviews.push({
+                    id: doc.id,
+                    name: reviewData.name,
+                    uid: reviewData.uid,
+                    email: reviewData.email,
+                    rating: reviewData.rating,
+                    comment: reviewData.comment,
+                    created: reviewData.created.toDate(),
+                    profile: profileData,
+                });
+            }
+
+            setReviews(listReviews);
+        }
+
+        loadReviews();
+    }, []);
+
+
     return (
         <div className="w-full max-w-7xl mx-auto gap-16">
             <div className="w-full flex flex-col md:flex-row justify-center items-center shadow-lg bg-secondary rounded-lg relative">
@@ -51,6 +128,63 @@ export function Home() {
                         <p className="text-foreground font-mono">Aplicativos para celular</p>
                     </div>
                 </div>
+            </div>
+
+            <div className="w-full flex flex-col mt-16">
+                <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold mt-4 select-none text-center">Avalições</h2>
+                <div className="w-8/12 mx-auto">
+                    <p className="text-foreground my-4 text-center">
+                        Estas avaliações não apenas valida meu trabalho,
+                        mas também orienta meu compromisso com a excelência
+                        no desenvolvimento, garantindo sempre a entrega de
+                        resultados que superam expectativas.
+                    </p>
+                </div>
+
+                <div className="w-full justify-center flex flex-wrap p-4 items-center gap-4">
+                    {reviews.map((review) => (
+                        <HoverCard key={review.id}>
+                            <HoverCardTrigger>
+                                <div className="w-full max-w-[300px] select-none cursor-pointer bg-card shadow-2xl rounded-lg p-4 mx-auto flex flex-col justify-center items-center">
+                                    <h3 className="text-lg font-semibold">{review.name}</h3>
+                                    <p className="text-foreground font-mono">{review.comment}</p>
+                                    <span className="text-xl flex">
+                                        {Array.from({ length: 5 }, (_, index) => (
+                                            <span key={index}>
+                                                {index < review.rating ? "⭐" : <Star className="mt-1" />}
+                                            </span>
+                                        ))}
+                                    </span>
+                                </div>
+                            </HoverCardTrigger>
+                            <HoverCardContent className="w-96 min-h-10 mx-auto">
+                                {review.profile ? (
+                                    <div className="flex gap-4">
+                                        {review.profile && review.profile.avatar.length > 0 && (
+                                            <img
+                                                src={review.profile.avatar[0].url}
+                                                alt={review.profile.name}
+                                                className="size-16 rounded-full mb-2 object-cover border-2 border-primary"
+                                            />
+                                        )}
+                                        <div>
+                                            <p className="font-semibold text-lg">{review.name}</p>
+                                            <p className="line-clamp-6">{review.profile.about}</p>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="flex gap-4">
+                                        <User />
+                                        <p>{review.name}</p>
+                                    </div>
+                                )}
+                            </HoverCardContent>
+                        </HoverCard>
+                    ))}
+                </div>
+
+
+
             </div>
 
             <div className="w-full flex flex-col mt-16 border-t">
