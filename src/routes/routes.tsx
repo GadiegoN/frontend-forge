@@ -8,6 +8,7 @@ import { Home } from "@/pages/app/home";
 
 import { AuthLayout } from "@/pages/_layout/auth";
 import { SignIn } from "@/pages/auth/sign-in";
+import { SignUp } from "@/pages/auth/sign-up";
 
 import { NotFound } from "@/pages/error/not-found";
 import { PrivateRoute } from "@/pages/private/private-routes";
@@ -26,7 +27,8 @@ export const router = createBrowserRouter([
         element: <AuthLayout />,
         errorElement: <NotFound />,
         children: [
-            { path: "/sign-in", element: <SignIn /> }
+            { path: "/sign-in", element: <SignIn /> },
+            { path: "/sign-up", element: <SignUp /> }
         ]
     },
     {

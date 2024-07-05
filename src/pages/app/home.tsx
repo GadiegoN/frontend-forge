@@ -11,6 +11,7 @@ import {
     HoverCardContent,
     HoverCardTrigger,
 } from "@/components/ui/hover-card"
+import { useNavigate } from "react-router-dom";
 
 interface ReviewsProps {
     id: string;
@@ -39,6 +40,7 @@ interface ProfileProps {
 }
 
 export function Home() {
+    const navigate = useNavigate()
     const [reviews, setReviews] = useState<ReviewsProps[]>([])
     const [showMore, setShowMore] = useState(false)
 
@@ -373,7 +375,7 @@ export function Home() {
                                 </div>
 
                                 <Button type="submit" disabled>Enviar mensagem</Button>
-                                <Button type="button" disabled variant="outline" className="w-full">Criar conta</Button>
+                                <Button type="button" variant="outline" className="w-full" onClick={() => navigate('/sign-up')}>Criar conta</Button>
                             </form>
 
                         </div>

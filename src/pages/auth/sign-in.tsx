@@ -66,12 +66,15 @@ export function SignIn() {
                     />
                     {errors.password && <p className="ml-4 text-sm text-red-500">{errors.password.message}</p>}
                 </div>
-                <div className="my-8 w-11/12 mx-auto flex flex-col items-center">
+                <div className="my-8 w-11/12 mx-auto flex flex-col">
                     <Button className="w-full" type="submit">
                         Fazer login
                     </Button>
 
-                    <Button disabled type="button" className="w-full mt-8" variant="outline">Criar conta</Button>
+                    <div className="flex items-center mt-4 w-full justify-end">
+                        <p>Não tem uma conta? </p>
+                        <Button type="button" variant="link" onClick={() => navigate('/sign-up')}>Fazer Cadastro</Button>
+                    </div>
                 </div>
             </form>
         </div>
