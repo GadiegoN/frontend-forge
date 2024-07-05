@@ -354,7 +354,7 @@ export function Home() {
 
                     <div className="w-full flex flex-col p-4 items-center gap-4">
                         <div className="w-full justify-center flex flex-wrap items-center gap-4">
-                            <div className="w-full bg-card shadow-2xl rounded-lg p-4 mx-auto flex flex-col gap-4">
+                            <form className="w-full bg-card shadow-2xl rounded-lg p-4 mx-auto flex flex-col gap-4">
                                 <div>
                                     <Label>Nome completo <span className="select-none text-red-500">*</span></Label>
                                     <Input disabled placeholder="Digite seu nome completo" />
@@ -372,8 +372,10 @@ export function Home() {
                                     <Textarea disabled placeholder="Digite seu nome completo" />
                                 </div>
 
-                                <Button disabled>Enviar mensagem</Button>
-                            </div>
+                                <Button type="submit" disabled>Enviar mensagem</Button>
+                                <Button type="button" disabled variant="outline" className="w-full">Criar conta</Button>
+                            </form>
+
                         </div>
                     </div>
                 </div>

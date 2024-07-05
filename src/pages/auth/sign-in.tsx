@@ -42,7 +42,10 @@ export function SignIn() {
     }
 
     return (
-        <div className="w-full max-w-7xl mx-auto gap-16">
+        <div className="w-full max-w-7xl mx-auto gap-16 flex flex-col md:grid md:grid-cols-2">
+            <div className="hidden md:block">
+                <img src="/login.png" alt="" />
+            </div>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="my-8 w-11/12 mx-auto">
                     <label htmlFor="email">Email</label>
@@ -63,12 +66,13 @@ export function SignIn() {
                     />
                     {errors.password && <p className="ml-4 text-sm text-red-500">{errors.password.message}</p>}
                 </div>
-                <div className="my-8 w-11/12 mx-auto">
+                <div className="my-8 w-11/12 mx-auto flex flex-col items-center">
                     <Button className="w-full" type="submit">
                         Fazer login
                     </Button>
-                </div>
 
+                    <Button disabled type="button" className="w-full mt-8" variant="outline">Criar conta</Button>
+                </div>
             </form>
         </div>
     )

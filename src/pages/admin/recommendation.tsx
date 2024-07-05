@@ -1,4 +1,6 @@
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { AuthContext } from "@/context/auth-context";
 import { db } from "@/services/firebase-connection";
 import { addDoc, collection, deleteDoc, doc, getDocs, query, where } from "firebase/firestore";
@@ -94,59 +96,63 @@ export function Recommendation() {
     }
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="" className="block mb-1 font-semibold">Avalie:</label>
-                <div className="flex items-center">
-                    {[1, 2, 3, 4, 5].map((value) => (
-                        <label key={value} className="ml-1">
-                            <input
-                                type="radio"
-                                name="rating"
-                                value={value}
-                                checked={rating === value}
-                                onChange={handleRatingChange}
-                                className="sr-only"
-                            />
-                            <span className="cursor-pointer text-xl">{value <= rating ? "⭐" : <Star className="mt-1" />}</span>
-                        </label>
+        <div className="w-full max-w-7xl mx-auto gap-16 flex flex-col md:grid md:grid-cols-2">
+            <div className="hidden md:flex items-center">
+                <img src="/review.png" alt="" />
+            </div>
+            <div className="mt-8">
+                <form onSubmit={handleSubmit}>
+                    <label htmlFor="" className="block mb-1 font-semibold">Avalie:</label>
+                    <div className="flex items-center mb-4">
+                        {[1, 2, 3, 4, 5].map((value) => (
+                            <label key={value} className="ml-1">
+                                <input
+                                    type="radio"
+                                    name="rating"
+                                    value={value}
+                                    checked={rating === value}
+                                    onChange={handleRatingChange}
+                                    className="sr-only"
+                                />
+                                <span className="cursor-pointer text-xl">{value <= rating ? "⭐" : <Star className="mt-1" />}</span>
+                            </label>
+                        ))}
+                    </div>
+                    <div className="mb-4">
+                        <label htmlFor="name" className="block mb-1 font-semibold">Nome:</label>
+                        <Input
+                            id="name"
+                            value={name}
+                            onChange={handleNameChange}
+                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+                            placeholder="Deixe seu nome"
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label htmlFor="comment" className="block mb-1 font-semibold">Comentário:</label>
+                        <Textarea
+                            id="comment"
+                            value={comment}
+                            onChange={handleCommentChange}
+                            rows={4}
+                            placeholder="Deixe seu comentário..."
+                        />
+                    </div>
+                    <div>
+                        <Button type="submit">Enviar avaliação</Button>
+                    </div>
+                </form>
+
+                <div className="flex flex-wrap gap-4 mt-8">
+                    {reviews.map((item) => (
+                        <div key={item.id} className="flex flex-col gap-4 shadow-lg border p-4 rounded-lg relative max-w-96">
+                            <p className="font-semibold text-xl">{item.name}</p>
+                            <p className="font-normal text-sm line-clamp-3">{item.comment}</p>
+                            <p className="text-center mb-8 font-semibold">{item.rating}⭐</p>
+                            <Trash className="size-6 text-red-500 absolute right-2 bottom-2 cursor-pointer hover:scale-105" onClick={() => handleDeleteReview(item)} />
+                        </div>
                     ))}
                 </div>
-                <div>
-                    <label htmlFor="name" className="block mb-1 font-semibold">Nome:</label>
-                    <input
-                        id="name"
-                        value={name}
-                        onChange={handleNameChange}
-                        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-                        placeholder="Deixe seu nome"
-                    />
-                </div>
-                <div>
-                    <label htmlFor="comment" className="block mb-1 font-semibold">Comentário:</label>
-                    <textarea
-                        id="comment"
-                        value={comment}
-                        onChange={handleCommentChange}
-                        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-                        rows={4}
-                        placeholder="Deixe seu comentário..."
-                    />
-                </div>
-                <div>
-                    <Button type="submit">Enviar avaliação</Button>
-                </div>
-            </form>
-
-            <div className="flex flex-wrap gap-4">
-                {reviews.map((item) => (
-                    <div key={item.id} className="shadow-lg border p-4 rounded-lg">
-                        <p>{item.name}</p>
-                        <p>{item.comment}</p>
-                        <p>{item.rating}</p>
-                        <Trash className="size-6 text-red-500" onClick={() => handleDeleteReview(item)} />
-                    </div>
-                ))}
             </div>
         </div>
     )

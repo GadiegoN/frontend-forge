@@ -182,75 +182,80 @@ export function Profile() {
     }, [user])
 
     return (
-        <div className="w-full flex flex-col justify-center items-center mt-4">
-            {
-                profile.length > 0 ? (
-                    <>
-                        {
-                            profile.map((person) => (
-                                <div className="flex flex-col items-center w-11/12">
-                                    <img src={person.avatar[0].url} className="size-40 rounded-full object-cover border shadow-md" />
-                                    <p className="text-xl font-semibold">{capitalizeEachWord(person.name)}</p>
-                                    <p className="text-base font-normal text-justify">{person.about}</p>
-                                </div>
-                            ))
-                        }
-                    </>
-                ) : (
-                    <div>
-                        <div className="flex flex-col justify-center items-center relative bg-slate-500 rounded-full size-32 mx-auto mb-4">
-                            <User className="text-white size-24" />
+        <div className="w-full max-w-7xl mx-auto gap-16 flex flex-col md:grid md:grid-cols-2">
+            <div className="w-full flex flex-col justify-center items-center mt-4 gap-4">
+                {
+                    profile.length > 0 ? (
+                        <>
+                            {
+                                profile.map((person) => (
+                                    <div className="flex flex-col items-center w-11/12 gap-2">
+                                        <img src={person.avatar[0].url} className="size-40 rounded-full object-cover border border-primary shadow-md" />
+                                        <p className="text-xl font-semibold">{capitalizeEachWord(person.name)}</p>
+                                        <p className="text-base font-normal text-justify">{person.about}</p>
+                                    </div>
+                                ))
+                            }
+                        </>
+                    ) : (
+                        <div>
+                            <div className="flex flex-col justify-center items-center relative bg-slate-500 rounded-full size-32 mx-auto mb-4">
+                                <User className="text-white size-24" />
+                            </div>
+                            <p className="text-xl font-semibold">{user?.email}</p>
                         </div>
-                        <p className="text-xl font-semibold">{user?.email}</p>
-                    </div>
-                )
-            }
-            <Dialog>
-                <DialogTrigger asChild>
-                    <Button variant="secondary">{profile.length > 0 ? "Editar dados" : "Criar perfil"}</Button>
-                </DialogTrigger>
-                <DialogContent>
-                    <DialogHeader>
-                        <DialogTitle>Edite suas informações</DialogTitle>
-                        <DialogDescription>
-                            <form onSubmit={handleSubmit(onSubmit)}>
-                                {avatar.length > 0 ? (
-                                    <div>
-                                        {avatar.map((item) => (
-                                            <div key={item.name} className="w-full h-32 flex items-center justify-center relative">
-                                                <img src={item.previewUrl} className="rounded-full size-32 object-cover" alt="" />
-                                                <Button type="button" onClick={() => handleDeleteImage(item)}>Excluir</Button>
-                                            </div>
-                                        ))}
-                                    </div>
-                                ) : (
-                                    <div className="flex flex-col justify-center items-center relative bg-slate-500 rounded-full size-32 mx-auto mb-4">
-                                        <User className="text-white size-24" />
-                                        <Camera className="absolute bottom-0 right-0 cursor-pointer bg-primary rounded-full p-2 size-12" />
-                                        <Input type="file" onChange={handleFile} className="absolute bottom-0 right-0 cursor-pointer bg-primary rounded-full p-2 size-12 opacity-0" />
-                                    </div>
-                                )}
-                                <TextInput
-                                    name="name"
-                                    placeholder="Digite seu nome"
-                                    label="Nome"
-                                    register={register}
-                                    erro={errors.name?.message}
-                                />
-                                <TextInput
-                                    textarea
-                                    name="about"
-                                    placeholder="Digite sobre voce..."
-                                    label="Sobre você"
-                                    register={register}
-                                    erro={errors.about?.message}
-                                />
-                                <Button className="w-full" type="submit">Salvar</Button>
-                            </form>
-                        </DialogDescription>
-                    </DialogHeader>
-                </DialogContent>
-            </Dialog>
+                    )
+                }
+                <Dialog>
+                    <DialogTrigger asChild>
+                        <Button variant="secondary">{profile.length > 0 ? "Editar dados" : "Criar perfil"}</Button>
+                    </DialogTrigger>
+                    <DialogContent>
+                        <DialogHeader>
+                            <DialogTitle>Edite suas informações</DialogTitle>
+                            <DialogDescription>
+                                <form onSubmit={handleSubmit(onSubmit)}>
+                                    {avatar.length > 0 ? (
+                                        <div>
+                                            {avatar.map((item) => (
+                                                <div key={item.name} className="w-full h-32 flex items-center justify-center relative">
+                                                    <img src={item.previewUrl} className="rounded-full size-32 object-cover" alt="" />
+                                                    <Button type="button" onClick={() => handleDeleteImage(item)}>Excluir</Button>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        <div className="flex flex-col justify-center items-center relative bg-slate-500 rounded-full size-32 mx-auto mb-4">
+                                            <User className="text-white size-24" />
+                                            <Camera className="absolute bottom-0 right-0 cursor-pointer bg-primary rounded-full p-2 size-12" />
+                                            <Input type="file" onChange={handleFile} className="absolute bottom-0 right-0 cursor-pointer bg-primary rounded-full p-2 size-12 opacity-0" />
+                                        </div>
+                                    )}
+                                    <TextInput
+                                        name="name"
+                                        placeholder="Digite seu nome"
+                                        label="Nome"
+                                        register={register}
+                                        erro={errors.name?.message}
+                                    />
+                                    <TextInput
+                                        textarea
+                                        name="about"
+                                        placeholder="Digite sobre voce..."
+                                        label="Sobre você"
+                                        register={register}
+                                        erro={errors.about?.message}
+                                    />
+                                    <Button className="w-full" type="submit">Salvar</Button>
+                                </form>
+                            </DialogDescription>
+                        </DialogHeader>
+                    </DialogContent>
+                </Dialog>
+            </div>
+            <div className="hidden md:flex items-center">
+                <img src="/profile.png" alt="" />
+            </div>
         </div>
     )
 }
