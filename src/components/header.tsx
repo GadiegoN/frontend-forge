@@ -6,9 +6,18 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
 import { useTheme } from "@/components/theme-provider"
 import { Logo } from "@/assets/logo"
 import { useNavigate } from "react-router-dom"
+import { ContactInfos } from "./contact"
 
 
 export function Header() {
@@ -22,7 +31,20 @@ export function Header() {
                 <div className="hidden md:flex">
                     <Button variant="link" onClick={() => navigate('/')}>Ínicio</Button>
                     <Button variant="link" onClick={() => navigate('/dashboard')}>Painel ADM</Button>
-                    <Button variant="link" asChild><a href="#contact">Contato</a></Button>
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <Button variant="link">Contato</Button>
+                        </DialogTrigger>
+                        <DialogContent>
+                            <DialogHeader>
+                                <DialogTitle></DialogTitle>
+                                <DialogDescription>
+                                </DialogDescription>
+                                <ContactInfos />
+                            </DialogHeader>
+                        </DialogContent>
+                    </Dialog>
+
                 </div>
                 <DropdownMenu>
                     <DropdownMenuTrigger className="flex md:hidden lg:hidden" asChild>
@@ -37,9 +59,21 @@ export function Header() {
                         <DropdownMenuItem onClick={() => navigate('/dashboard')}>
                             Painel ADM
                         </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
-                            <a className="cursor-pointer" href="#contact">Contato</a>
-                        </DropdownMenuItem>
+                        <Dialog>
+                            <DropdownMenuItem>
+                                <DialogTrigger>
+                                    Contato
+                                </DialogTrigger>
+                            </DropdownMenuItem>
+                            <DialogContent>
+                                <DialogHeader>
+                                    <DialogTitle></DialogTitle>
+                                    <DialogDescription>
+                                    </DialogDescription>
+                                    <ContactInfos />
+                                </DialogHeader>
+                            </DialogContent>
+                        </Dialog>
                     </DropdownMenuContent>
                 </DropdownMenu>
                 <DropdownMenu>

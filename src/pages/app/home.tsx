@@ -1,7 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { db } from "@/services/firebase-connection";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import { Contact, Flag, Mail, Monitor, Smartphone, Star, User } from "lucide-react";
@@ -11,7 +8,7 @@ import {
     HoverCardContent,
     HoverCardTrigger,
 } from "@/components/ui/hover-card"
-import { useNavigate } from "react-router-dom";
+import { ContactInfos } from "@/components/contact";
 
 interface ReviewsProps {
     id: string;
@@ -40,7 +37,6 @@ interface ProfileProps {
 }
 
 export function Home() {
-    const navigate = useNavigate()
     const [reviews, setReviews] = useState<ReviewsProps[]>([])
     const [showMore, setShowMore] = useState(false)
 
@@ -355,30 +351,7 @@ export function Home() {
                     <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold mt-4 select-none text-center">Deixe suas informações</h2>
 
                     <div className="w-full flex flex-col p-4 items-center gap-4">
-                        <div className="w-full justify-center flex flex-wrap items-center gap-4">
-                            <form className="w-full bg-card shadow-2xl rounded-lg p-4 mx-auto flex flex-col gap-4">
-                                <div>
-                                    <Label>Nome completo <span className="select-none text-red-500">*</span></Label>
-                                    <Input disabled placeholder="Digite seu nome completo" />
-                                </div>
-                                <div>
-                                    <Label>Email <span className="select-none text-red-500">*</span></Label>
-                                    <Input disabled placeholder="Digite seu nome completo" />
-                                </div>
-                                <div>
-                                    <Label>Assunto</Label>
-                                    <Input disabled placeholder="Digite seu nome completo" />
-                                </div>
-                                <div>
-                                    <Label>Mensagem</Label>
-                                    <Textarea disabled placeholder="Digite seu nome completo" />
-                                </div>
-
-                                <Button type="submit" disabled>Enviar mensagem</Button>
-                                <Button type="button" variant="outline" className="w-full" onClick={() => navigate('/sign-up')}>Criar conta</Button>
-                            </form>
-
-                        </div>
+                        <ContactInfos />
                     </div>
                 </div>
                 <div className="w-full flex flex-col mt-16 border-t">
