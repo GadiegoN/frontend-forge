@@ -63,7 +63,7 @@ export function ContactInfos() {
                     <Input
                         id="email"
                         {...register("email")}
-                        placeholder="Digite seu nome completo"
+                        placeholder="Digite seu email"
                     />
                     {errors.email && <p className="ml-4 text-sm text-red-500">{errors.email.message}</p>}
                 </div>
@@ -72,7 +72,7 @@ export function ContactInfos() {
                     <Input
                         id="subject"
                         {...register("subject")}
-                        placeholder="Digite seu nome completo"
+                        placeholder="Digite o titulo do assunto"
                     />
                     {errors.subject && <p className="ml-4 text-sm text-red-500">{errors.subject.message}</p>}
                 </div>
@@ -81,7 +81,7 @@ export function ContactInfos() {
                     <Textarea
                         id="message"
                         {...register("message")}
-                        placeholder="Digite seu nome completo"
+                        placeholder="Digite sua mensagem..."
                     />
                     {errors.message && <p className="ml-4 text-sm text-red-500">{errors.message.message}</p>}
                 </div>
