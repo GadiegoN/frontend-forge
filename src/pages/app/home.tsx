@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
 import { db } from "@/services/firebase-connection";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
-import { Contact, Flag, Mail, Monitor, Smartphone, Star, User } from "lucide-react";
+import { ArrowBigDown, Contact, Download, Flag, Mail, Monitor, Smartphone, Star, User } from "lucide-react";
 import { useEffect, useState } from "react";
 import {
     HoverCard,
@@ -9,6 +10,11 @@ import {
     HoverCardTrigger,
 } from "@/components/ui/hover-card"
 import { ContactInfos } from "@/components/contact";
+import Slider from "react-slick";
+import { saveAs } from 'file-saver';
+
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 interface ReviewsProps {
     id: string;
@@ -36,9 +42,81 @@ interface ProfileProps {
     about: string;
 }
 
+
+function SampleNextArrow(props: any) {
+    const { className, style, onClick } = props;
+    return (
+        <div
+            className={className}
+            style={{ ...style, display: "flex", background: "black", borderRadius: 999, alignItems: "center", justifyContent: "center" }}
+            onClick={onClick}
+        />
+    );
+}
+
+function SamplePrevArrow(props: any) {
+    const { className, style, onClick } = props;
+    return (
+        <div
+            className={className}
+            style={{ ...style, display: "flex", background: "black", borderRadius: 999, alignItems: "center", justifyContent: "center" }}
+            onClick={onClick}
+        />
+    );
+}
+
 export function Home() {
     const [reviews, setReviews] = useState<ReviewsProps[]>([])
     const [showMore, setShowMore] = useState(false)
+    const [sliderPerView, setSliderPerView] = useState<number>(1)
+
+    const sliderPortifolio = {
+        dots: true,
+        infinite: true,
+        speed: 1000,
+        slidesToShow: sliderPerView,
+        slidesToScroll: 1,
+        nextArrow: <SampleNextArrow />,
+        prevArrow: <SamplePrevArrow />
+    };
+
+    const sliderSkills = {
+        dots: false,
+        infinite: true,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        autoplay: true,
+        speed: 2000,
+        autoplaySpeed: 0,
+        cssEase: "linear",
+        nextArrow: <SampleNextArrow />,
+        prevArrow: <SamplePrevArrow />
+    }
+
+    function DownloadPdf() {
+        const pdfUrl = "/curriculo.pdf"
+        const pdfName = "Curriculo - Gadiego Nogueira"
+
+        saveAs(pdfUrl, pdfName)
+    }
+
+    useEffect(() => {
+        function handleResize() {
+            if (window.innerWidth < 720) {
+                setSliderPerView(1)
+            } else {
+                setSliderPerView(2)
+            }
+        }
+
+        handleResize()
+
+        window.addEventListener("resize", handleResize)
+
+        return () => {
+            window.removeEventListener("resize", handleResize)
+        }
+    }, [])
 
     useEffect(() => {
         async function loadReviews() {
@@ -85,7 +163,7 @@ export function Home() {
     return (
         <div className="w-full max-w-7xl mx-auto gap-16">
             <div className="w-full flex flex-col md:flex-row justify-center items-center shadow-lg bg-secondary rounded-lg relative">
-                <div className="flex flex-col px-10 h-96">
+                <div className="flex flex-col px-10 pb-1">
                     <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold mt-4 select-none">Eu sou Gadiego Nogueira</h1>
                     <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold">Desenvolvedor <span className="text-primary">Front-End</span></h2>
 
@@ -97,7 +175,13 @@ export function Home() {
                         técnicas e de gestão.
                     </p>
 
-                    <Button onClick={() => setShowMore(!showMore)} size="sm" variant="outline" className="w-64 mt-10">{!showMore ? "Ler mais..." : "Ler menos"}</Button>
+                    <div className="flex gap-4 flex-col md:flex-row">
+                        <Button onClick={() => setShowMore(!showMore)} size="sm" variant="outline" className="">{!showMore ? "Ler mais..." : "Ler menos"}</Button>
+                        <Button size="sm" onClick={DownloadPdf}>Baixar curriculo <Download className="size-4 ml-1" /></Button>
+                    </div>
+                    <div className="w-10 mx-auto flex mt-4">
+                        <ArrowBigDown className="animate-bounce size-6 text-center text-primary" />
+                    </div>
                 </div>
                 <div className="md:flex hidden relative w-full max-w-96 h-96 min-h-64 bg-primary rounded-tl-[290px] rounded-tr-lg rounded-br-lg px-10">
                     <img src="/avatar.png" className="absolute bottom-0 left-0 right-0 h-96 object-cover" alt="" />
@@ -118,7 +202,7 @@ export function Home() {
                     <div className="w-full max-w-[300px] hover:scale-105 select-none cursor-pointer bg-card shadow-2xl rounded-lg p-4 mx-auto flex flex-col justify-center items-center">
                         <Monitor className="text-primary size-24" />
                         <h3 className="text-lg font-semibold">Desenvolvimento web</h3>
-                        <p className="text-foreground font-mono">Sites, Blogs, E-commerce</p>
+                        <p className="text-foreground text-center font-mono">Sites, Blogs, E-commerce, Landing Pages</p>
                     </div>
                     <div className="w-full max-w-[300px] hover:scale-105 select-none cursor-pointer bg-card shadow-2xl rounded-lg p-4 mx-auto flex flex-col justify-center items-center">
                         <Smartphone className="text-primary size-24" />
@@ -126,6 +210,102 @@ export function Home() {
                         <p className="text-foreground font-mono">Aplicativos para celular</p>
                     </div>
                 </div>
+            </div>
+
+            <div className="w-full flex flex-col mt-16 border-t">
+                <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold mt-4 select-none text-center">Portifolio</h2>
+                <div className="w-8/12 mx-auto">
+                    <p className="text-foreground my-4 text-center">
+                        Cada projeto representou um desafio único que contribuiu significativamente para meu crescimento profissional e para a entrega de soluções tecnológicas.
+                        Estou comprometido em continuar explorando novas tecnologias e metodologias para continuar entregando bons resultados em futuros projetos.
+                    </p>
+                </div>
+
+                <div className="w-11/12 flex flex-col p-6 items-center gap-4">
+                    <Slider className="w-11/12 max-w-7xl" {...sliderPortifolio}>
+                        <div className="px-4">
+                            <div className="w-full select-none bg-card shadow-2xl pb-4 rounded-lg mx-auto flex flex-col justify-center items-center">
+                                <img src="/app-links.png" className="w-full h-[300px] object-cover rounded-t-lg" />
+                                <div className="p-4">
+                                    <h3 className="text-lg font-semibold text-center">App links</h3>
+                                    <p className="text-foreground text-justify">
+                                        Sistema de cadastro de links. Utilizei o vite para criar o site em ReactJs com Typescript e TailwindCSS.
+                                    </p>
+                                </div>
+                                <div className="w-full flex justify-end gap-4 p-4">
+                                    <Button variant="outline" asChild><a href="https://github.com/GadiegoN/app-links" target="_blank">Codigo Fonte</a></Button>
+                                    <Button variant="outline" asChild><a href="https://app-links-psi.vercel.app/" target="_blank">Deploy</a></Button>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="px-4">
+                            <div className="w-full select-none bg-card shadow-2xl pb-4 rounded-lg mx-auto flex flex-col justify-center items-center">
+                                <img src="/design-system.png" className="w-full h-[300px] object-cover rounded-t-lg" />
+                                <div className="p-4">
+                                    <h3 className="text-lg font-semibold text-center">Design System</h3>
+                                    <p className="text-foreground text-justify">
+                                        Componentes criados isoladamente, criados utilizando Monorepo, Turborepo, Storybook, Typescript, entre outras...
+                                    </p>
+                                </div>
+                                <div className="w-full flex justify-end gap-4 p-4">
+                                    <Button variant="outline" asChild><a href="https://github.com/GadiegoN/05-design-system" target="_blank">Codigo Fonte</a></Button>
+                                    <Button variant="outline" asChild><a href="https://gadiegon.github.io/05-design-system/" target="_blank">Deploy</a></Button>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="px-4">
+                            <div className="w-full select-none bg-card shadow-2xl pb-4 rounded-lg mx-auto flex flex-col justify-center items-center">
+                                <img src="/expert-notes.png" className="w-full h-[300px] object-cover rounded-t-lg" />
+                                <div className="p-4">
+                                    <h3 className="text-lg font-semibold text-center">Expert Notes</h3>
+                                    <p className="text-foreground text-justify">
+                                        Sitema Web para criação de notas por texto ou audio. Desenvolvido Utilizando ReactJs com Typescript e TailwindCSS
+                                    </p>
+                                </div>
+                                <div className="w-full flex justify-end gap-4 p-4">
+                                    <Button variant="outline" asChild><a href="https://github.com/GadiegoN/nlw-expert-notes" target="_blank">Codigo Fonte</a></Button>
+                                    <Button variant="outline" asChild><a href="https://nlw-expert-notes-gadiegon.vercel.app/" target="_blank">Deploy</a></Button>
+                                </div>
+                            </div>
+                        </div>
+                    </Slider>
+                </div>
+            </div>
+
+            <div className="w-full flex flex-col mt-16 border-t">
+                <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold mt-4 select-none text-center">Tecnologias</h2>
+                <div className="w-8/12 mx-auto">
+                    <p className="text-foreground my-4 text-center">
+                        Utilizando as tecnologias mais inovadoras e eficientes para construir soluções web e mobile de alta performance.
+                    </p>
+                </div>
+
+                <Slider className="w-10/12 md:11/12 mx-auto" {...sliderSkills}>
+                    <div>
+                        <img src="/logo-html.png" className="size-12 bg-card rounded-lg p-1" />
+                    </div>
+                    <div>
+                        <img src="/logo-css.png" className="size-12 bg-card rounded-lg p-1" />
+                    </div>
+                    <div>
+                        <img src="/logo-javascript.png" className="size-12 bg-card rounded-lg p-1" />
+                    </div>
+                    <div>
+                        <img src="/logo-git.png" className="size-12 bg-card rounded-lg p-1" />
+                    </div>
+                    <div>
+                        <img src="/logo-github.png" className="size-12 bg-card rounded-lg p-1" />
+                    </div>
+                    <div>
+                        <img src="/logo-typescript.png" className="size-12 bg-card rounded-lg p-1" />
+                    </div>
+                    <div>
+                        <img src="/logo-react.png" className="size-12 bg-card rounded-lg p-1" />
+                    </div>
+                    <div>
+                        <img src="/logo-tailwind.png" className="size-12 bg-card rounded-lg p-1" />
+                    </div>
+                </Slider>
             </div>
 
             <div className="w-full flex flex-col mt-16">
@@ -179,170 +359,6 @@ export function Home() {
                             </HoverCardContent>
                         </HoverCard>
                     ))}
-                </div>
-
-
-
-            </div>
-
-            <div className="w-full flex flex-col mt-16 border-t">
-                <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold mt-4 select-none text-center">Escolaridade</h2>
-                <div className="w-8/12 mx-auto">
-                    <p className="text-foreground my-4 text-center">
-                        Estas formações combinada com minha experiência prática, me proporcionou uma base sólida
-                        e abrangente em desenvolvimento de software, permitindo-me abordar projetos complexos com confiança
-                        e competência.
-                    </p>
-                </div>
-
-                <div className="w-full flex flex-col p-4 items-center gap-4">
-                    <div className="w-full bg-card shadow-2xl rounded-lg p-4 mx-auto flex justify-between items-center flex-col md:flex-row">
-                        <div className="w-full md:w-6/12">
-                            <h3 className="text-lg font-semibold">Faculdades Associadas de Uberaba (FAZU)</h3>
-                            <p className="text-foreground font-medium">Formado <span className="font-normal bg-primary px-4 py-1 rounded-full text-white text-sm ml-6">Jan 2015 - Jul 2020</span></p>
-                        </div>
-                        <div className="w-full md:w-6/12">
-                            <h3 className="text-lg font-semibold">Graduação em Sistemas de Informação</h3>
-                            <p className="text-foreground my-4 text-justify">
-                                <b>Principais Disciplinas:</b> Algoritmos e Estruturas de Dados, Programação Orientada a Objetos,
-                                Desenvolvimento Web, Engenharia de Software, Banco de Dados, Redes de Computadores.
-                            </p>
-                        </div>
-                    </div>
-                    <div className="w-full bg-card shadow-2xl rounded-lg p-4 mx-auto flex justify-between items-center flex-col md:flex-row">
-                        <div className="w-full md:w-6/12">
-                            <h3 className="text-lg font-semibold">MBA USP/Esalq</h3>
-                            <p className="text-foreground font-medium">Cursando <span className="font-normal bg-primary px-4 py-1 rounded-full text-white text-sm ml-6">Mai 2024 - Momento</span></p>
-                        </div>
-                        <div className="w-full md:w-6/12">
-                            <h3 className="text-lg font-semibold">MBA em Engenharia de Software</h3>
-                            <p className="text-foreground my-4 text-justify">
-                                Aprimorando minhas habilidades em tecnologia e programação, bem como aprender sobre conceitos, práticas e ferramentas de DevOps.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div className="w-full flex flex-col mt-16 border-t">
-                <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold mt-4 select-none text-center">Experiencias</h2>
-                <div className="w-8/12 mx-auto">
-                    <p className="text-foreground my-4 text-center">
-                        Com uma sólida experiência em desenvolvimento de software, estou sempre em busca de novos desafios e oportunidades
-                        para aplicar e expandir minhas habilidades. Meu objetivo é contribuir para o sucesso de projetos e equipes,
-                        trazendo soluções inovadoras e eficazes.
-                    </p>
-                </div>
-
-                <div className="w-full flex flex-col p-4 items-center gap-4">
-                    <div className="w-full bg-card shadow-2xl rounded-lg p-4 mx-auto flex justify-between items-center flex-col md:flex-row">
-                        <div className="w-full md:w-6/12">
-                            <h3 className="text-lg font-semibold">Dyndo</h3>
-                            <p className="text-foreground font-medium">Tempo Integral <span className="font-normal bg-primary px-4 py-1 rounded-full text-white text-sm ml-6">Jan 2023 - Mai 2024</span></p>
-                        </div>
-                        <div className="w-full md:w-6/12">
-                            <h3 className="text-lg font-semibold">Desenvolvedor Web/Mobile</h3>
-                            <p className="text-foreground my-4 text-justify">
-                                Trabalhei no desenvolvimento de aplicações utilizando ReactJs e React Native, Typescript, TailwindCSS, Styled Components.
-                                Desenvolvimento de interfaces de usuário responsivas e acessíveis, garantindo uma experiência de usuário ótima em diferentes dispositivos e navegadores.
-                                Uso do GitHub para controle de versão, gerenciando o código fonte de forma eficiente e colaborativa.
-                            </p>
-                        </div>
-                    </div>
-                    <div className="w-full bg-card shadow-2xl rounded-lg p-4 mx-auto flex justify-between items-center flex-col md:flex-row">
-                        <div className="w-full md:w-6/12">
-                            <h3 className="text-lg font-semibold">Dyndo</h3>
-                            <p className="text-foreground font-medium">Tempo Integral <span className="font-normal bg-primary px-4 py-1 rounded-full text-white text-sm ml-6">Jan 2022 - Jul 2022</span></p>
-                        </div>
-                        <div className="w-full md:w-6/12">
-                            <h3 className="text-lg font-semibold">Desenvolvedor Mobile</h3>
-                            <p className="text-foreground my-4 text-justify">
-                                Fui responsável pela reconstrução de um aplicativo existente que utilizava o framework Quasar, migrando-o para React Native.
-                                Essa experiência foi fundamental para desenvolver minhas habilidades em React Native, TypeScript e Styled Components.
-                            </p>
-                        </div>
-                    </div>
-                    <div className="w-full bg-card shadow-2xl rounded-lg p-4 mx-auto flex justify-between items-center flex-col md:flex-row">
-                        <div className="w-full md:w-6/12">
-                            <h3 className="text-lg font-semibold">Bravo - Serviços Logísticos</h3>
-                            <p className="text-foreground font-medium">Tempo Integral <span className="font-normal bg-primary px-4 py-1 rounded-full text-white text-sm ml-6">Out 2020 - Dez 2021</span></p>
-                        </div>
-                        <div className="w-full md:w-6/12">
-                            <h3 className="text-lg font-semibold">Analista de Sistemas</h3>
-                            <p className="text-foreground my-4 text-justify">
-                                Atuei na manutenção e atualização contínua do código frontend para garantir compatibilidade com as últimas versões do Angular e melhorias na performance.
-                                Focando no desenvolvimento de sistemas complexos utilizando algumas versões do Angular no front-end e NodeJs com SQL no back-end,
-                                pude aprimorar minhas habilidades em desenvolvimento full stack.
-                            </p>
-                        </div>
-                    </div>
-                    <div className="w-full bg-card shadow-2xl rounded-lg p-4 mx-auto flex justify-between items-center flex-col md:flex-row">
-                        <div className="w-full md:w-6/12">
-                            <h3 className="text-lg font-semibold">Dyndo</h3>
-                            <p className="text-foreground font-medium">Tempo Integral <span className="font-normal bg-primary px-4 py-1 rounded-full text-white text-sm ml-6">Jun 2019 - Out 2020</span></p>
-                        </div>
-                        <div className="w-full md:w-6/12">
-                            <h3 className="text-lg font-semibold">Desenvolvedor Mobile</h3>
-                            <p className="text-foreground my-4 text-justify">
-                                Essa experiência foi fundamental para desenvolver minhas habilidades em Vue.js e no uso do framework Quasar.
-                                Este projeto envolveu a criação de uma aplicação robusta e responsiva, voltada para fornecer uma excelente experiência ao usuário.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div className="w-full flex flex-col mt-16 border-t">
-                <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold mt-4 select-none text-center">Portifolio</h2>
-                <div className="w-8/12 mx-auto">
-                    <p className="text-foreground my-4 text-center">
-                        Cada projeto representou um desafio único que contribuiu significativamente para meu crescimento profissional e para a entrega de soluções tecnológicas.
-                        Estou comprometido em continuar explorando novas tecnologias e metodologias para continuar entregando bons resultados em futuros projetos.
-                    </p>
-                </div>
-
-                <div className="w-full flex flex-col p-4 items-center gap-4">
-                    <div className="w-full justify-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-4 items-center gap-4">
-                        <div className="w-full select-none bg-card shadow-2xl pb-4 rounded-lg mx-auto flex flex-col justify-center items-center">
-                            <img src="/app-links.png" className="w-full h-[300px] object-cover rounded-t-lg" />
-                            <div className="p-4">
-                                <h3 className="text-lg font-semibold text-center">App links</h3>
-                                <p className="text-foreground text-justify">
-                                    Sistema de cadastro de links. Utilizei o vite para criar o site em ReactJs com Typescript e TailwindCSS.
-                                </p>
-                            </div>
-                            <div className="w-full flex justify-end gap-4 p-4">
-                                <Button variant="outline" asChild><a href="https://github.com/GadiegoN/app-links" target="_blank">Codigo Fonte</a></Button>
-                                <Button variant="outline" asChild><a href="https://app-links-psi.vercel.app/" target="_blank">Deploy</a></Button>
-                            </div>
-                        </div>
-                        <div className="w-full select-none bg-card shadow-2xl pb-4 rounded-lg mx-auto flex flex-col justify-center items-center">
-                            <img src="/design-system.png" className="w-full h-[300px] object-cover rounded-t-lg" />
-                            <div className="p-4">
-                                <h3 className="text-lg font-semibold text-center">Design System</h3>
-                                <p className="text-foreground text-justify">
-                                    Componentes criados isoladamente, criados utilizando Monorepo, Turborepo, Storybook, Typescript, entre outras...
-                                </p>
-                            </div>
-                            <div className="w-full flex justify-end gap-4 p-4">
-                                <Button variant="outline" asChild><a href="https://github.com/GadiegoN/05-design-system" target="_blank">Codigo Fonte</a></Button>
-                                <Button variant="outline" asChild><a href="https://gadiegon.github.io/05-design-system/" target="_blank">Deploy</a></Button>
-                            </div>
-                        </div>
-                        <div className="w-full select-none bg-card shadow-2xl pb-4 rounded-lg mx-auto flex flex-col justify-center items-center">
-                            <img src="/expert-notes.png" className="w-full h-[300px] object-cover rounded-t-lg" />
-                            <div className="p-4">
-                                <h3 className="text-lg font-semibold text-center">Expert Notes</h3>
-                                <p className="text-foreground text-justify">
-                                    Sitema Web para criação de notas por texto ou audio. Desenvolvido Utilizando ReactJs com Typescript e TailwindCSS
-                                </p>
-                            </div>
-                            <div className="w-full flex justify-end gap-4 p-4">
-                                <Button variant="outline" asChild><a href="https://github.com/GadiegoN/nlw-expert-notes" target="_blank">Codigo Fonte</a></Button>
-                                <Button variant="outline" asChild><a href="https://nlw-expert-notes-gadiegon.vercel.app/" target="_blank">Deploy</a></Button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
