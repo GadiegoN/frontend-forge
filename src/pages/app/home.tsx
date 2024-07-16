@@ -15,6 +15,7 @@ import { saveAs } from 'file-saver';
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Project } from "@/components/project";
 
 interface ReviewsProps {
     id: string;
@@ -64,6 +65,60 @@ function SamplePrevArrow(props: any) {
         />
     );
 }
+
+
+interface ProjectProps {
+    id: string
+    title: string
+    description: string
+    image: string
+    url: string
+    previewUrl: string
+}
+
+
+const PROJECTS: ProjectProps[] = [
+    {
+        id: "0001",
+        title: "App links",
+        description: "Sistema de cadastro de links. Utilizei o vite para criar o site em ReactJs com Typescript e TailwindCSS.",
+        image: "/app-links.png",
+        url: "https://github.com/GadiegoN/app-links",
+        previewUrl: "https://app-links-psi.vercel.app/",
+    },
+    {
+        id: "0002",
+        title: "Cardápio Online",
+        description: "Landing page para comercio, onde fica disponibilizado todo o cardápio para o cliente poder fazer o pedido e receber em casa. Desenvolvido com HTML, CSS e JavaScript.",
+        image: "/menu.png",
+        url: "https://github.com/GadiegoN/menu",
+        previewUrl: "https://gadiegon.github.io/menu/",
+    },
+    {
+        id: "0003",
+        title: "Design System",
+        description: "Componentes criados isoladamente, criados utilizando Monorepo, Turborepo, Storybook, Typescript, entre outras...",
+        image: "/design-system.png",
+        url: "https://github.com/GadiegoN/05-design-system",
+        previewUrl: "https://gadiegon.github.io/05-design-system/",
+    },
+    {
+        id: "0004",
+        title: "Expert Notes",
+        description: "Sitema Web para criação de notas por texto ou audio. Desenvolvido Utilizando ReactJs com Typescript e TailwindCSS.",
+        image: "/expert-notes.png",
+        url: "https://github.com/GadiegoN/app-links",
+        previewUrl: "https://app-links-psi.vercel.app/",
+    },
+    {
+        id: "0005",
+        title: "Loja de Legumes",
+        description: "Site de vendas de legumes criado em reactjs com typescript e tailwind.",
+        image: "/vegetable-store.png",
+        url: "https://github.com/GadiegoN/vegetable-store",
+        previewUrl: "https://vegetable-store-hazel.vercel.app/",
+    },
+]
 
 export function Home() {
     const [reviews, setReviews] = useState<ReviewsProps[]>([])
@@ -223,51 +278,16 @@ export function Home() {
 
                 <div className="w-11/12 flex flex-col p-6 items-center gap-4">
                     <Slider className="w-11/12 max-w-7xl" {...sliderPortifolio}>
-                        <div className="px-4">
-                            <div className="w-full select-none bg-card shadow-2xl pb-4 rounded-lg mx-auto flex flex-col justify-center items-center">
-                                <img src="/app-links.png" className="w-full h-[300px] object-cover rounded-t-lg" />
-                                <div className="p-4">
-                                    <h3 className="text-lg font-semibold text-center">App links</h3>
-                                    <p className="text-foreground text-justify">
-                                        Sistema de cadastro de links. Utilizei o vite para criar o site em ReactJs com Typescript e TailwindCSS.
-                                    </p>
-                                </div>
-                                <div className="w-full flex justify-end gap-4 p-4">
-                                    <Button variant="outline" asChild><a href="https://github.com/GadiegoN/app-links" target="_blank">Codigo Fonte</a></Button>
-                                    <Button variant="outline" asChild><a href="https://app-links-psi.vercel.app/" target="_blank">Deploy</a></Button>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="px-4">
-                            <div className="w-full select-none bg-card shadow-2xl pb-4 rounded-lg mx-auto flex flex-col justify-center items-center">
-                                <img src="/design-system.png" className="w-full h-[300px] object-cover rounded-t-lg" />
-                                <div className="p-4">
-                                    <h3 className="text-lg font-semibold text-center">Design System</h3>
-                                    <p className="text-foreground text-justify">
-                                        Componentes criados isoladamente, criados utilizando Monorepo, Turborepo, Storybook, Typescript, entre outras...
-                                    </p>
-                                </div>
-                                <div className="w-full flex justify-end gap-4 p-4">
-                                    <Button variant="outline" asChild><a href="https://github.com/GadiegoN/05-design-system" target="_blank">Codigo Fonte</a></Button>
-                                    <Button variant="outline" asChild><a href="https://gadiegon.github.io/05-design-system/" target="_blank">Deploy</a></Button>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="px-4">
-                            <div className="w-full select-none bg-card shadow-2xl pb-4 rounded-lg mx-auto flex flex-col justify-center items-center">
-                                <img src="/expert-notes.png" className="w-full h-[300px] object-cover rounded-t-lg" />
-                                <div className="p-4">
-                                    <h3 className="text-lg font-semibold text-center">Expert Notes</h3>
-                                    <p className="text-foreground text-justify">
-                                        Sitema Web para criação de notas por texto ou audio. Desenvolvido Utilizando ReactJs com Typescript e TailwindCSS
-                                    </p>
-                                </div>
-                                <div className="w-full flex justify-end gap-4 p-4">
-                                    <Button variant="outline" asChild><a href="https://github.com/GadiegoN/nlw-expert-notes" target="_blank">Codigo Fonte</a></Button>
-                                    <Button variant="outline" asChild><a href="https://nlw-expert-notes-gadiegon.vercel.app/" target="_blank">Deploy</a></Button>
-                                </div>
-                            </div>
-                        </div>
+                        {PROJECTS.map((project) => (
+                            <Project
+                                key={project.id}
+                                description={project.description}
+                                title={project.title}
+                                image={project.image}
+                                url={project.url}
+                                previewUrl={project.previewUrl}
+                            />
+                        ))}
                     </Slider>
                 </div>
             </div>
