@@ -118,6 +118,14 @@ const PROJECTS: ProjectProps[] = [
         url: "https://github.com/GadiegoN/vegetable-store",
         previewUrl: "https://vegetable-store-hazel.vercel.app/",
     },
+    {
+        id: "0006",
+        title: "Serviços Front-end",
+        description: "Site de prestação de serviços, desenvolvido utilizando NextJs, typescript, tailwind e CMS para gerenciar o conteudo.",
+        image: "/devfront.png",
+        url: "https://github.com/GadiegoN/devfront",
+        previewUrl: "https://devfront-woad.vercel.app/",
+    },
 ]
 
 export function Home() {
