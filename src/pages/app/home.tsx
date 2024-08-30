@@ -126,6 +126,14 @@ const PROJECTS: ProjectProps[] = [
         url: "https://github.com/GadiegoN/devfront",
         previewUrl: "https://devfront-woad.vercel.app/",
     },
+    {
+        id: "0007",
+        title: "Fina Control",
+        description: "Gerencie suas finanças de forma simples e eficiente. Aqui você pode adicionar e monitorar suas transações e acompanhar seu saldo. Explore o dashboard para ter uma visão detalhada de suas entradas e saídas.",
+        image: "/fina-control.png",
+        url: "https://github.com/GadiegoN/fina-control",
+        previewUrl: "https://fina-control.vercel.app/",
+    },
 ]
 
 export function Home() {
