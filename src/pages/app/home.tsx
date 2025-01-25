@@ -184,14 +184,17 @@ const PROJECTS: ProjectProps[] = [
 ];
 
 const skills = [
-  { name: "HTML", imageUrl: "/logo-html.png" },
-  { name: "CSS", imageUrl: "/logo-css.png" },
   { name: "JavaScript", imageUrl: "/logo-javascript.png" },
-  { name: "Git", imageUrl: "/logo-git.png" },
-  { name: "GitHub", imageUrl: "/logo-github.png" },
   { name: "TypeScript", imageUrl: "/logo-typescript.png" },
   { name: "React", imageUrl: "/logo-react.png" },
+  { name: "React Native", imageUrl: "/react-native.png" },
+  { name: "NextJs", imageUrl: "/next-js.png" },
   { name: "Tailwind", imageUrl: "/logo-tailwind.png" },
+  { name: "Styled Component", imageUrl: "/styled-component.png" },
+  { name: "HTML", imageUrl: "/logo-html.png" },
+  { name: "CSS", imageUrl: "/logo-css.png" },
+  { name: "Git", imageUrl: "/logo-git.png" },
+  { name: "GitHub", imageUrl: "/logo-github.png" },
 ];
 
 export function Home() {
