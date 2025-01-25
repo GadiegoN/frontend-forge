@@ -47,7 +47,7 @@ export function ListSkills({ skills }: ListSkillsProps) {
             <img
               src={skill.imageUrl}
               alt={skill.name}
-              className="w-16 h-16 bg-card rounded-lg p-2"
+              className="w-16 h-16 bg-white rounded-lg p-2"
             />
             <span className="mt-2 text-sm font-medium text-white">
               {skill.name}
