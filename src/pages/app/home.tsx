@@ -4,6 +4,8 @@ import { db } from "@/services/firebase-connection";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import {
   ArrowBigDown,
+  ChevronLeft,
+  ChevronRight,
   Contact,
   Download,
   Flag,
@@ -62,13 +64,21 @@ function SampleNextArrow(props: any) {
       style={{
         ...style,
         display: "flex",
-        background: "black",
-        borderRadius: 999,
+        background: "#00000000",
+        borderRadius: "50%",
         alignItems: "center",
         justifyContent: "center",
+        cursor: "pointer",
+        marginRight: "-10px",
       }}
       onClick={onClick}
-    />
+    >
+      <ChevronRight
+        className="absolute z-50 size-12 bg-primary rounded-full"
+        color="white"
+        size={24}
+      />
+    </div>
   );
 }
 
@@ -80,13 +90,21 @@ function SamplePrevArrow(props: any) {
       style={{
         ...style,
         display: "flex",
-        background: "black",
-        borderRadius: 999,
+        background: "#00000000",
+        borderRadius: "50%",
         alignItems: "center",
         justifyContent: "center",
+        cursor: "pointer",
+        marginLeft: "-10px",
       }}
       onClick={onClick}
-    />
+    >
+      <ChevronLeft
+        className="absolute z-50 size-12 bg-primary rounded-full"
+        color="white"
+        size={24}
+      />
+    </div>
   );
 }
 
@@ -358,7 +376,11 @@ export function Home() {
         </div>
 
         <div className="w-11/12 flex flex-col p-6 items-center gap-4">
-          <Slider className="w-11/12 max-w-7xl" {...sliderPortifolio}>
+          <Slider
+            autoplay
+            className="w-11/12 ml-8 max-w-7xl"
+            {...sliderPortifolio}
+          >
             {PROJECTS.map((project) => (
               <Project
                 key={project.id}
