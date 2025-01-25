@@ -26,6 +26,7 @@ import { saveAs } from "file-saver";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Project } from "@/components/project";
+import { ListSkills } from "@/components/list-skills";
 
 interface ReviewsProps {
   id: string;
@@ -164,6 +165,17 @@ const PROJECTS: ProjectProps[] = [
   },
 ];
 
+const skills = [
+  { name: "HTML", imageUrl: "/logo-html.png" },
+  { name: "CSS", imageUrl: "/logo-css.png" },
+  { name: "JavaScript", imageUrl: "/logo-javascript.png" },
+  { name: "Git", imageUrl: "/logo-git.png" },
+  { name: "GitHub", imageUrl: "/logo-github.png" },
+  { name: "TypeScript", imageUrl: "/logo-typescript.png" },
+  { name: "React", imageUrl: "/logo-react.png" },
+  { name: "Tailwind", imageUrl: "/logo-tailwind.png" },
+];
+
 export function Home() {
   const [reviews, setReviews] = useState<ReviewsProps[]>([]);
   const [showMore, setShowMore] = useState(false);
@@ -175,19 +187,6 @@ export function Home() {
     speed: 1000,
     slidesToShow: sliderPerView,
     slidesToScroll: 1,
-    nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />,
-  };
-
-  const sliderSkills = {
-    dots: false,
-    infinite: true,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    autoplay: true,
-    speed: 2000,
-    autoplaySpeed: 0,
-    cssEase: "linear",
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
   };
@@ -264,7 +263,10 @@ export function Home() {
 
   return (
     <div className="w-full max-w-7xl mx-auto gap-16">
-      <div className="w-full flex flex-col md:flex-row justify-center items-center shadow-lg bg-secondary rounded-lg relative">
+      <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold my-4 select-none text-center">
+        Sobre mim
+      </h2>
+      <div className="w-full flex flex-col md:flex-row justify-center items-center shadow-lg border border-foreground/20 bg-secondary rounded-lg relative">
         <div className="flex flex-col px-10 pb-1">
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold mt-4 select-none">
             Eu sou Gadiego Nogueira
@@ -276,10 +278,13 @@ export function Home() {
           <p
             className={!showMore ? "my-4 line-clamp-4 md:line-clamp-2" : "my-4"}
           >
-            Desenvolvedor Frontend, formado em Sistemas de Informação. Com mais
-            de 4 anos de experiência em desenvolvimento web e mobile,
-            especializado em ReactJS, React Native, Angular, NodeJs e
-            TypeScript.
+            Formado em Sistemas de Informação, com mais de 4 anos de experiência
+            no desenvolvimento de soluções web e mobile. Especialista em
+            tecnologias modernas como ReactJS, React Native, Angular, Node.js e
+            TypeScript, com foco em criar interfaces intuitivas e de alta
+            performance. Apaixonado por inovação e boas práticas de
+            desenvolvimento, sempre em busca de aprender e aplicar novas
+            tecnologias.
           </p>
 
           <div className="flex gap-4 flex-col md:flex-row">
@@ -301,8 +306,8 @@ export function Home() {
         </div>
         <div className="md:flex hidden relative w-full max-w-96 h-96 min-h-64 bg-primary rounded-tl-[290px] rounded-tr-lg rounded-br-lg px-10">
           <img
-            src="/avatar.png"
-            className="absolute bottom-0 left-0 right-0 h-96 object-cover"
+            src="/avatar-profile.jpeg"
+            className="absolute bottom-0 left-0 right-0 h-96 object-cover rounded-r-lg"
             alt=""
           />
         </div>
@@ -379,56 +384,7 @@ export function Home() {
           </p>
         </div>
 
-        <Slider className="w-10/12 md:11/12 mx-auto" {...sliderSkills}>
-          <div>
-            <img
-              src="/logo-html.png"
-              className="size-12 bg-card rounded-lg p-1"
-            />
-          </div>
-          <div>
-            <img
-              src="/logo-css.png"
-              className="size-12 bg-card rounded-lg p-1"
-            />
-          </div>
-          <div>
-            <img
-              src="/logo-javascript.png"
-              className="size-12 bg-card rounded-lg p-1"
-            />
-          </div>
-          <div>
-            <img
-              src="/logo-git.png"
-              className="size-12 bg-card rounded-lg p-1"
-            />
-          </div>
-          <div>
-            <img
-              src="/logo-github.png"
-              className="size-12 bg-card rounded-lg p-1"
-            />
-          </div>
-          <div>
-            <img
-              src="/logo-typescript.png"
-              className="size-12 bg-card rounded-lg p-1"
-            />
-          </div>
-          <div>
-            <img
-              src="/logo-react.png"
-              className="size-12 bg-card rounded-lg p-1"
-            />
-          </div>
-          <div>
-            <img
-              src="/logo-tailwind.png"
-              className="size-12 bg-card rounded-lg p-1"
-            />
-          </div>
-        </Slider>
+        <ListSkills skills={skills} />
       </div>
 
       <div className="w-full flex flex-col mt-16">
